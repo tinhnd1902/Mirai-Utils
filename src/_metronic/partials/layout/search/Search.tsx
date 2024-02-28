@@ -66,7 +66,7 @@ const Search: FC = () => {
         data-kt-menu-trigger="auto"
         data-kt-menu-overflow="false"
         data-kt-menu-permanent="true"
-        data-kt-menu-placement="bottom-end"
+        data-kt-menu-placement="bottom-start"
         ref={element}
       >
         <div className="d-flex align-items-center" data-kt-search-element="toggle" id="kt_header_search_toggle">

@@ -4,6 +4,7 @@ import { KTIcon, toAbsoluteUrl } from '../../../helpers';
 import { LayoutSetup, useLayout } from '../../core';
 import { Header } from './Header';
 import { Navbar } from './Navbar';
+import { Search } from '../../../partials';
 
 export function HeaderWrapper() {
   const { config, classes } = useLayout();
@@ -71,6 +72,8 @@ export function HeaderWrapper() {
         )}
 
         <div id="kt_app_header_wrapper" className="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
+          {/* <Search /> */}
+
           {config.app.header.default?.content === 'menu' && config.app.header.default.menu?.display && (
             <div
               className="app-header-menu app-header-mobile-drawer align-items-stretch"
@@ -88,6 +91,7 @@ export function HeaderWrapper() {
               <Header />
             </div>
           )}
+
           <Navbar />
         </div>
       </div>
