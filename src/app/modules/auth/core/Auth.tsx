@@ -1,10 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
-import { FC, useState, useEffect, createContext, useContext, Dispatch, SetStateAction } from 'react';
-import { LayoutSplashScreen } from '../../../../_metronic/layout/core';
-import { AuthModel, UserModel } from './_models';
-import * as authHelper from './AuthHelpers';
-import { getUserByToken } from './_requests';
+import { useConnectionStatus } from '@thirdweb-dev/react';
+import { Dispatch, FC, SetStateAction, createContext, useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { WithChildren } from '../../../../_metronic/helpers';
+import { LayoutSplashScreen } from '../../../../_metronic/layout/core';
+import { CONNECT_STATUS } from '../../../constants';
+import * as authHelper from './AuthHelpers';
+import { AuthModel, UserModel } from './_models';
 
 type AuthContextProps = {
   auth: AuthModel | undefined;
@@ -53,39 +55,26 @@ const AuthProvider: FC<WithChildren> = ({ children }) => {
 };
 
 const AuthInit: FC<WithChildren> = ({ children }) => {
-  const { auth, currentUser, logout, setCurrentUser } = useAuth();
+  const navigate = useNavigate();
+
+  const connectStatus = useConnectionStatus();
+  const isUnknown = connectStatus === CONNECT_STATUS.UNKNOWN;
+  const isConnecting = connectStatus === CONNECT_STATUS.CONNECTING;
+  const isDisconnected = connectStatus === CONNECT_STATUS.DISCONNECTED;
+
   const [showSplashScreen, setShowSplashScreen] = useState(true);
 
   // We should request user by authToken (IN OUR EXAMPLE IT'S API_TOKEN) before rendering the application
   useEffect(() => {
-    const requestUser = async (apiToken: string) => {
-      try {
-        if (!currentUser) {
-          const { data } = await getUserByToken(apiToken);
-          if (data) {
-            setCurrentUser(data);
-          }
-        }
-      } catch (error) {
-        console.error(error);
-        if (currentUser) {
-          logout();
-        }
-      } finally {
-        setShowSplashScreen(false);
-      }
-    };
-
-    if (auth && auth.api_token) {
-      requestUser(auth.api_token);
-    } else {
-      logout();
-      setShowSplashScreen(false);
+    if (isUnknown || isConnecting) return;
+    if (isDisconnected) {
+      navigate('/auth');
     }
-    // eslint-disable-next-line
-  }, []);
+
+    setShowSplashScreen(false);
+  }, [connectStatus]);
 
   return showSplashScreen ? <LayoutSplashScreen /> : <>{children}</>;
 };
 
-export { AuthProvider, AuthInit, useAuth };
+export { AuthInit, AuthProvider, useAuth };

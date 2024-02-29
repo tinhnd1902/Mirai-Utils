@@ -18,11 +18,13 @@ import {
 } from '../../../_metronic/partials/widgets';
 import { ToolbarWrapper } from '../../../_metronic/layout/components/toolbar';
 import { Content } from '../../../_metronic/layout/components/content';
+import { Link } from 'react-router-dom';
 
 const DashboardPage: FC = () => (
   <>
     <ToolbarWrapper />
     <Content>
+      <Link to="/workspace">Workspace</Link>
       {/* begin::Row */}
       <div className="row g-5 g-xl-10 mb-5 mb-xl-10">
         {/* begin::Col */}

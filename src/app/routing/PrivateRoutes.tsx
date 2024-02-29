@@ -1,12 +1,12 @@
-import { lazy, FC, Suspense } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
-import { MasterLayout } from '../../_metronic/layout/MasterLayout';
+import { FC, Suspense, lazy } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import TopBarProgress from 'react-topbar-progress-indicator';
-import { DashboardWrapper } from '../pages/dashboard/DashboardWrapper';
-import { MenuTestPage } from '../pages/MenuTestPage';
 import { getCSSVariableValue } from '../../_metronic/assets/ts/_utils';
 import { WithChildren } from '../../_metronic/helpers';
+import { MasterLayout } from '../../_metronic/layout/MasterLayout';
+import { DashboardWrapper } from '../pages/dashboard/DashboardWrapper';
 import BuilderPageWrapper from '../pages/layout-builder/BuilderPageWrapper';
+import { useAppWorkspace } from '../stores/AppStore';
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'));
@@ -16,15 +16,16 @@ const PrivateRoutes = () => {
   const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'));
   const UsersPage = lazy(() => import('../modules/apps/user-management/UsersPage'));
 
+  const workSpace = useAppWorkspace();
+
   return (
     <Routes>
       <Route element={<MasterLayout />}>
-        {/* Redirect to Dashboard after success login/registartion */}
-        <Route path="auth/*" element={<Navigate to="/dashboard" />} />
+        {/* Redirect to Dashboard/Workspace after success login/registartion */}
+        <Route path="auth/*" element={<Navigate to={workSpace ? '/dashboard' : '/workspace'} />} />
         {/* Pages */}
         <Route path="dashboard" element={<DashboardWrapper />} />
         <Route path="builder" element={<BuilderPageWrapper />} />
-        <Route path="menu-test" element={<MenuTestPage />} />
         {/* Lazy Modules */}
         <Route
           path="crafted/pages/profile/*"

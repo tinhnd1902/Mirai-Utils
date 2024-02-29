@@ -5,13 +5,16 @@
  * components (e.g: `src/app/modules/Auth/pages/AuthPage`, `src/app/BasePage`).
  */
 
-import { useAddress } from '@thirdweb-dev/react';
+import { useConnectionStatus } from '@thirdweb-dev/react';
 import { FC } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { App } from '../App';
+import { CONNECT_STATUS } from '../constants';
 import { AuthPage, Logout } from '../modules/auth';
 import { ErrorsPage } from '../modules/errors/ErrorsPage';
 import { PrivateRoutes } from './PrivateRoutes';
+import WorkSpace from '../pages/workspace/WorkSpace';
+import { useAppWorkspace } from '../stores/AppStore';
 
 /**
  * Base URL of the website.
@@ -21,7 +24,10 @@ import { PrivateRoutes } from './PrivateRoutes';
 const { BASE_URL } = import.meta.env;
 
 const AppRoutes: FC = () => {
-  const address = useAddress();
+  const connectStatus = useConnectionStatus();
+  const isConnected = connectStatus === CONNECT_STATUS.CONNECTED;
+
+  const workSpace = useAppWorkspace();
 
   return (
     <BrowserRouter basename={BASE_URL}>
@@ -29,10 +35,12 @@ const AppRoutes: FC = () => {
         <Route element={<App />}>
           <Route path="error/*" element={<ErrorsPage />} />
           <Route path="logout" element={<Logout />} />
-          {address ? (
+          {isConnected ? (
             <>
               <Route path="/*" element={<PrivateRoutes />} />
-              <Route index element={<Navigate to="/dashboard" />} />
+              <Route index element={<Navigate to={workSpace ? '/dashboard' : '/workspace'} />} />
+
+              <Route path="workspace" element={<WorkSpace />} />
             </>
           ) : (
             <>

@@ -9,6 +9,13 @@ export enum MIRAI_CHAIN_ID {
   TESTNET = 2195,
 }
 
+export enum CONNECT_STATUS {
+  UNKNOWN = 'unknown',
+  CONNECTING = 'connecting',
+  CONNECTED = 'connected',
+  DISCONNECTED = 'disconnected',
+}
+
 export const RPC_MAINNET = 'https://rpc1.miraichain.io';
 export const RPC_TESTNET = 'https://rpc1-testnet.miraichain.io';
 
