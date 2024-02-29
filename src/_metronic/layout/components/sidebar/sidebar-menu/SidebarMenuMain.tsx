@@ -14,7 +14,7 @@ const SidebarMenuMain = () => {
         title={intl.formatMessage({ id: 'MENU.DASHBOARD' })}
         fontIcon="bi-app-indicator"
       />
-      <SidebarMenuItem to="/builder" icon="switch" title="Layout Builder" fontIcon="bi-layers" />
+      {/* <SidebarMenuItem to="/builder" icon="switch" title="Layout Builder" fontIcon="bi-layers" /> */}
 
       <div className="menu-item">
         <div className="menu-content pt-8 pb-2">
@@ -24,9 +24,9 @@ const SidebarMenuMain = () => {
 
       <SidebarMenuItem to="/games" icon="ghost" title="Games" />
       <SidebarMenuItem to="/finace" icon="graph-4" title="Finance" />
-      <SidebarMenuItem to="/mkt" icon="gift" title="Marketing" />
+      <SidebarMenuItem to="/marketing" icon="gift" title="Marketing" />
       <SidebarMenuItem to="/analytics" icon="chart-line" title="Analytics" />
-      <SidebarMenuItem to="/games" icon="two-credit-cart" title="Payments" />
+      <SidebarMenuItem to="/payments" icon="two-credit-cart" title="Payments" />
 
       <div className="menu-item">
         <div className="menu-content pt-8 pb-2">
