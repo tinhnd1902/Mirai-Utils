@@ -5,7 +5,7 @@ import { getCSSVariableValue } from '../../_metronic/assets/ts/_utils';
 import { WithChildren } from '../../_metronic/helpers';
 import { MasterLayout } from '../../_metronic/layout/MasterLayout';
 import { DashboardWrapper } from '../pages/dashboard/DashboardWrapper';
-import BuilderPageWrapper from '../pages/layout-builder/BuilderPageWrapper';
+import { GamesWrapper } from '../pages/games/GamesWrapper';
 import { useAppWorkspace } from '../stores/AppStore';
 
 const PrivateRoutes = () => {
@@ -25,7 +25,11 @@ const PrivateRoutes = () => {
         <Route path="auth/*" element={<Navigate to={workSpace ? '/dashboard' : '/workspace'} />} />
         {/* Pages */}
         <Route path="dashboard" element={<DashboardWrapper />} />
-        <Route path="builder" element={<BuilderPageWrapper />} />
+
+        <Route path="games" element={<GamesWrapper />} />
+
+        {/* <Route path="builder" element={<BuilderPageWrapper />} /> */}
+        {/* <Route path="menu-test" element={<MenuTestPage />} /> */}
         {/* Lazy Modules */}
         <Route
           path="crafted/pages/profile/*"

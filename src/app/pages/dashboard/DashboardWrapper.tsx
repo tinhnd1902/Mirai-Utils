@@ -32,7 +32,7 @@ const DashboardPage: FC = () => (
           <CardsWidget20
             className="h-md-50 mb-5 mb-xl-10"
             description="Active Projects"
-            color="#F1416C"
+            color="#DF4D47"
             img={toAbsoluteUrl('media/patterns/vector-1.png')}
           />
           <CardsWidget7
